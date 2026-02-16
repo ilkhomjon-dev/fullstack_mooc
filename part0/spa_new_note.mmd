@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant user
+    participant browser
+    participant server
+
+    user->>browser: Enters note text and clicks Save
+    Note right of browser: JavaScript intercepts form submit\n(prevents default page reload)
+
+    browser->>browser: Create note object\n(add date + content)
+    browser->>server: POST /exampleapp/new_note_spa\n(JSON data)
+    activate server
+
+    Note right of server: Server validates and stores\nnew note in memory/database
+
+    server-->>browser: 201 Created\n(Returns created note as JSON)
+    deactivate server
+
+    Note right of browser: JavaScript updates notes list\nin the DOM dynamically
